@@ -1,5 +1,7 @@
 import _ from 'lodash'
 
+import Errors from './Errors'
+
 export default class Validator {
   // eslint-disable-next-line
   static check( data, validate, options ) {
@@ -13,6 +15,8 @@ export default class Validator {
       }
     } )
 
-    return errors
+    return new Errors( errors )
   }
+
+
 }

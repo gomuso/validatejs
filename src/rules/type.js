@@ -11,7 +11,7 @@ export default type => ( value ) => {
     case 'array':
       return _.isArray( value )
     case 'object':
-      return _.isObject( value )
+      return _.isObject( value ) && !_.isArray( value )
     case 'bool':
       return _.isBoolean( value )
     default:

@@ -1,6 +1,6 @@
 import { Length } from '../../src/rules'
 
-test( 'it tests for a the length of a variable', () => {
+describe( 'it tests for a the length of a variable', () => {
   test( 'it tests the length for strings', () => {
     expect( Length( 3 )( '' ) ).toBe( false )
     expect( Length( 3 )( 'abcd' ) ).toBe( false )

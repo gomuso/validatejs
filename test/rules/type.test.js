@@ -1,6 +1,6 @@
 import { Type } from '../../src/rules'
 
-test( 'it tests for a variables type', () => {
+describe( 'it tests for a variables type', () => {
   test( 'it tests for type string', () => {
     expect( Type( 'string' )( null ) ).toBe( false )
     expect( Type( 'string' )( 123 ) ).toBe( false )
@@ -48,12 +48,12 @@ test( 'it tests for a variables type', () => {
   } )
 
   test( 'it tests for type boolean', () => {
-    expect( Type( 'boolean' )( null ) ).toBe( false )
-    expect( Type( 'boolean' )( 123 ) ).toBe( false )
-    expect( Type( 'boolean' )( 'David' ) ).toBe( false )
-    expect( Type( 'boolean' )( [ 2, 3 ] ) ).toBe( false )
+    expect( Type( 'bool' )( null ) ).toBe( false )
+    expect( Type( 'bool' )( 123 ) ).toBe( false )
+    expect( Type( 'bool' )( 'David' ) ).toBe( false )
+    expect( Type( 'bool' )( [ 2, 3 ] ) ).toBe( false )
 
-    expect( Type( 'boolean' )( false ) ).toBe( true )
-    expect( Type( 'boolean' )( true ) ).toBe( true )
+    expect( Type( 'bool' )( false ) ).toBe( true )
+    expect( Type( 'bool' )( true ) ).toBe( true )
   } )
 } )

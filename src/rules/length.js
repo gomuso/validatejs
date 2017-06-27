@@ -1,7 +1,7 @@
 import _ from 'lodash'
 
 export default options => ( value ) => {
-    // if value is an array
+  // if value is an array
   if ( _.isArray( value ) ) {
     return value.length === options
   }
@@ -9,18 +9,18 @@ export default options => ( value ) => {
   const valLength = value.toString().length
 
   if ( _.isInteger( options ) ) {
-    return valLength.length === options
+    return valLength === options
   }
 
   if ( _.isObject( options ) ) {
     const { min, max } = options
 
     const executed = [
-      min ? valLength === min : true,
-      max ? valLength === max : true
+      min ? valLength >= min : true,
+      max ? valLength <= max : true
     ]
 
-    return _.every( executed, true )
+    return _.every( executed, e => e === true )
   }
 
   return true

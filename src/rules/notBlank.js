@@ -1,7 +1,17 @@
-export default () => ( value ) => {
-  if ( !value || value === '' ) {
-    return false
+export default class NotBlank {
+  name() {
+    return 'NotBlank'
   }
 
-  return true
+  execute( value ) {
+    if ( !value || value === '' ) {
+      return false
+    }
+
+    return true
+  }
+
+  error() {
+    return 'is required'
+  }
 }

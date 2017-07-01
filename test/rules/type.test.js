@@ -2,58 +2,58 @@ import { Type } from '../../src/rules'
 
 describe( 'it tests for a variables type', () => {
   test( 'it tests for type string', () => {
-    expect( Type( 'string' )( null ) ).toBe( false )
-    expect( Type( 'string' )( 123 ) ).toBe( false )
-    expect( Type( 'string' )( [ 1, 2 ] ) ).toBe( false )
-    expect( Type( 'string' )( { a: '12' } ) ).toBe( false )
+    expect( ( new Type( 'string' ) ).execute( null ) ).toBe( false )
+    expect( ( new Type( 'string' ) ).execute( 123 ) ).toBe( false )
+    expect( ( new Type( 'string' ) ).execute( [ 1, 2 ] ) ).toBe( false )
+    expect( ( new Type( 'string' ) ).execute( { a: '12' } ) ).toBe( false )
 
-    expect( Type( 'string' )( 'David' ) ).toBe( true )
+    expect( ( new Type( 'string' ) ).execute( 'David' ) ).toBe( true )
   } )
 
   test( 'it tests for type int', () => {
-    expect( Type( 'int' )( null ) ).toBe( false )
-    expect( Type( 'int' )( '12' ) ).toBe( false )
-    expect( Type( 'int' )( { a: '12' } ) ).toBe( false )
-    expect( Type( 'int' )( 123.23 ) ).toBe( false )
+    expect( ( new Type( 'int' ) ).execute( null ) ).toBe( false )
+    expect( ( new Type( 'int' ) ).execute( '12' ) ).toBe( false )
+    expect( ( new Type( 'int' ) ).execute( { a: '12' } ) ).toBe( false )
+    expect( ( new Type( 'int' ) ).execute( 123.23 ) ).toBe( false )
 
-    expect( Type( 'int' )( 12 ) ).toBe( true )
+    expect( ( new Type( 'int' ) ).execute( 12 ) ).toBe( true )
   } )
 
   test( 'it tests for type number', () => {
-    expect( Type( 'number' )( null ) ).toBe( false )
-    expect( Type( 'number' )( '12' ) ).toBe( false )
-    expect( Type( 'number' )( [ 123, 43 ] ) ).toBe( false )
-    expect( Type( 'number' )( { a: '12' } ) ).toBe( false )
+    expect( ( new Type( 'number' ) ).execute( null ) ).toBe( false )
+    expect( ( new Type( 'number' ) ).execute( '12' ) ).toBe( false )
+    expect( ( new Type( 'number' ) ).execute( [ 123, 43 ] ) ).toBe( false )
+    expect( ( new Type( 'number' ) ).execute( { a: '12' } ) ).toBe( false )
 
-    expect( Type( 'number' )( 12 ) ).toBe( true )
-    expect( Type( 'number' )( 39.123 ) ).toBe( true )
+    expect( ( new Type( 'number' ) ).execute( 12 ) ).toBe( true )
+    expect( ( new Type( 'number' ) ).execute( 39.123 ) ).toBe( true )
   } )
 
   test( 'it tests for type array', () => {
-    expect( Type( 'array' )( null ) ).toBe( false )
-    expect( Type( 'array' )( 123 ) ).toBe( false )
-    expect( Type( 'array' )( 'John' ) ).toBe( false )
-    expect( Type( 'array' )( { a: '123' } ) ).toBe( false )
+    expect( ( new Type( 'array' ) ).execute( null ) ).toBe( false )
+    expect( ( new Type( 'array' ) ).execute( 123 ) ).toBe( false )
+    expect( ( new Type( 'array' ) ).execute( 'John' ) ).toBe( false )
+    expect( ( new Type( 'array' ) ).execute( { a: '123' } ) ).toBe( false )
 
-    expect( Type( 'array' )( [ 1, 2, 3 ] ) ).toBe( true )
+    expect( ( new Type( 'array' ) ).execute( [ 1, 2, 3 ] ) ).toBe( true )
   } )
 
   test( 'it tests for type object', () => {
-    expect( Type( 'object' )( null ) ).toBe( false )
-    expect( Type( 'object' )( 123 ) ).toBe( false )
-    expect( Type( 'object' )( 'David' ) ).toBe( false )
-    expect( Type( 'object' )( [ 2, 3 ] ) ).toBe( false )
+    expect( ( new Type( 'object' ) ).execute( null ) ).toBe( false )
+    expect( ( new Type( 'object' ) ).execute( 123 ) ).toBe( false )
+    expect( ( new Type( 'object' ) ).execute( 'David' ) ).toBe( false )
+    expect( ( new Type( 'object' ) ).execute( [ 2, 3 ] ) ).toBe( false )
 
-    expect( Type( 'object' )( { a: 1, b: 2 } ) ).toBe( true )
+    expect( ( new Type( 'object' ) ).execute( { a: 1, b: 2 } ) ).toBe( true )
   } )
 
   test( 'it tests for type boolean', () => {
-    expect( Type( 'bool' )( null ) ).toBe( false )
-    expect( Type( 'bool' )( 123 ) ).toBe( false )
-    expect( Type( 'bool' )( 'David' ) ).toBe( false )
-    expect( Type( 'bool' )( [ 2, 3 ] ) ).toBe( false )
+    expect( ( new Type( 'bool' ) ).execute( null ) ).toBe( false )
+    expect( ( new Type( 'bool' ) ).execute( 123 ) ).toBe( false )
+    expect( ( new Type( 'bool' ) ).execute( 'David' ) ).toBe( false )
+    expect( ( new Type( 'bool' ) ).execute( [ 2, 3 ] ) ).toBe( false )
 
-    expect( Type( 'bool' )( false ) ).toBe( true )
-    expect( Type( 'bool' )( true ) ).toBe( true )
+    expect( ( new Type( 'bool' ) ).execute( false ) ).toBe( true )
+    expect( ( new Type( 'bool' ) ).execute( true ) ).toBe( true )
   } )
 } )

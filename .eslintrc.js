@@ -1,5 +1,8 @@
 module.exports = {
     "extends": "airbnb",
+    "env": {
+      "jest": true
+    },
     "plugins": [
         "jsx-a11y",
         "import"

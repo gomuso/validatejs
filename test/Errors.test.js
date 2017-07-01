@@ -1,6 +1,6 @@
 import Errors from '../src/Errors'
 
-describe ( 'Check if a validation failed', () => {
+describe( 'Check if a validation failed', () => {
   test( 'it passes the validation', () => {
     const errors = new Errors()
     expect( errors.failed() ).toBe( false )
@@ -14,3 +14,9 @@ describe ( 'Check if a validation failed', () => {
     expect( errors.failed() ).toBe( true )
   } )
 } )
+
+// describe( 'Return readable errors', () => {
+//   test( 'it returns non-customised errors', () => {
+
+//   } )
+// } )

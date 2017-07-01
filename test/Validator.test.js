@@ -1,19 +1,23 @@
 import Validator from '../src/Validator'
 import * as Rules from '../src/rules'
 
-test ( 'Simple non-nested validation', () => {
+test( 'Simple non-nested validation', () => {
   const data = {
     id: '1',
     firstName: 'Davidwithasuperlongname',
-    lastName: 'F'
+    lastName: 1
   }
 
-  const validated = Validator.check( data, {
-    id: [ Rules.NotBlank(), Rules.Type( 'int' ) ],
-    firstName: [ Rules.Type( 'string' ), Rules.Length( { min: 2, max: 10 } ) ],
-    lastName: [ Rules.Type( 'string' ), Rules.Length( { min: 2, max: 10 } ) ],
-    email: [ Rules.Type( 'string' ) ]
+  const validation = Validator.check( data, {
+    id: [ new Rules.NotBlank(), new Rules.Type( 'int' ) ],
+    firstName: [ new Rules.Type( 'string' ), new Rules.Length( { min: 2, max: 10 } ) ],
+    lastName: [ new Rules.Type( 'string' ), new Rules.Length( { min: 2, max: 10 } ) ],
+    email: [ new Rules.NotBlank(), new Rules.Type( 'string' ) ]
+  }, {
+    email: 'Email address'
   } )
 
-  expect( validated.failed() ).toBe( true )
+  console.log( validation.errors() )
+
+  expect( validation.failed() ).toBe( true )
 } )

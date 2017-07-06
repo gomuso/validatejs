@@ -17,6 +17,8 @@ export default class Type {
         return _.isInteger( value )
       case 'number':
         return _.isNumber( value )
+      case 'alphanum':
+        return new RegExp( /^[a-z0-9]+$/i ).test( value )
       case 'array':
         return _.isArray( value )
       case 'object':

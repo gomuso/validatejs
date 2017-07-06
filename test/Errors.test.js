@@ -1,4 +1,5 @@
 import Errors from '../src/Errors'
+import * as Rules from '../src/rules'
 
 describe( 'Check if a validation failed', () => {
   test( 'it passes the validation', () => {
@@ -15,8 +16,17 @@ describe( 'Check if a validation failed', () => {
   } )
 } )
 
-// describe( 'Return readable errors', () => {
-//   test( 'it returns non-customised errors', () => {
+describe( 'Return readable errors', () => {
+  test( 'it returns readable errors for a single validation error', () => {
+    const errors = new Errors( { id: [ new Rules.Required() ] } )
+    const errors2 = new Errors( { age: [ new Rules.Type( 'int' ) ] } )
 
-//   } )
-// } )
+    expect( errors.errors() ).toEqual( {
+      id: 'Id is required'
+    } )
+
+    expect( errors2.errors() ).toEqual( {
+      age: 'Age should be of type int'
+    } )
+  } )
+} )

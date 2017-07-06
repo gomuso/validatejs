@@ -1,3 +1,5 @@
-export NotBlank from './notBlank'
+export Required from './required'
 export Type from './type'
-export Length from './length'
+export Email from './email'
+export Min from './min'
+export Max from './max'

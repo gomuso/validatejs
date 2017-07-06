@@ -1,5 +1,4 @@
 import Validator from '../src/Validator'
-import * as Rules from '../src/rules'
 
 test( 'Simple non-nested validation', () => {
   const data = {
@@ -9,15 +8,13 @@ test( 'Simple non-nested validation', () => {
   }
 
   const validation = Validator.check( data, {
-    id: [ new Rules.NotBlank(), new Rules.Type( 'int' ) ],
-    firstName: [ new Rules.Type( 'string' ), new Rules.Length( { min: 2, max: 10 } ) ],
-    lastName: [ new Rules.Type( 'string' ), new Rules.Length( { min: 2, max: 10 } ) ],
-    email: [ new Rules.NotBlank(), new Rules.Type( 'string' ) ]
+    id: 'required, type:int',
+    firstName: 'required, type:int, min:2, max: 10',
+    lastName: 'required, type:string, min:2, max:10',
+    email: 'required, email'
   }, {
     email: 'Email address'
   } )
-
-  console.log( validation.errors() )
 
   expect( validation.failed() ).toBe( true )
 } )

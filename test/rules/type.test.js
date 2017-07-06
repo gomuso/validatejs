@@ -29,6 +29,15 @@ describe( 'it tests for a variables type', () => {
     expect( ( new Type( 'number' ) ).execute( 39.123 ) ).toBe( true )
   } )
 
+  test( 'it tests for type alphanumerical', () => {
+    expect( ( new Type( 'alphanum' ) ).execute( 'a#293!' ) ).toBe( false )
+    expect( ( new Type( 'alphanum' ) ).execute( 'john_doe~' ) ).toBe( false )
+    expect( ( new Type( 'alphanum' ) ).execute( 'john doe' ) ).toBe( false )
+
+    expect( ( new Type( 'alphanum' ) ).execute( 'JohnDoe' ) ).toBe( true )
+    expect( ( new Type( 'alphanum' ) ).execute( 'Johny1123' ) ).toBe( true )
+  } )
+
   test( 'it tests for type array', () => {
     expect( ( new Type( 'array' ) ).execute( null ) ).toBe( false )
     expect( ( new Type( 'array' ) ).execute( 123 ) ).toBe( false )

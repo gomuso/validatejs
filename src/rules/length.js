@@ -11,40 +11,36 @@ export default class Length {
   }
 
   execute( value ) {
-    // if value is an array
+    const { min, max } = this._options
+
+    // check for array length
     if ( _.isArray( value ) ) {
       this._errorMsg = `length of ${ this._options }`
-      return value.length === this._options
+
+      if ( min ) {
+        return value.length >= min
+      }
+
+      return value.length <= max
     }
 
-    const valLength = value.toString().length
 
-    if ( _.isInteger( this._options ) ) {
-      this._errorMsg = `length of ${ this._options }`
-      return valLength === this._options
+    // check for number min and max
+    if ( _.isNumber( value ) ) {
+      if ( min ) {
+        return value >= min
+      }
+
+      return value <= max
     }
 
-    if ( _.isObject( this._options ) ) {
-      const { min, max } = this._options
-
-      if ( min && !max ) {
-        this._errorMsg = `minimum length of ${ min }`
+    // check for string length
+    if ( _.isString( value ) ) {
+      if ( min ) {
+        return value.length >= min
       }
 
-      if ( max && !min ) {
-        this._errorMsg = `minimum length of ${ max }`
-      }
-
-      if ( min && max ) {
-        this._errorMsg = `between ${ min } and ${ max } characters long`
-      }
-
-      const executed = [
-        min ? valLength >= min : true,
-        max ? valLength <= max : true
-      ]
-
-      return _.every( executed, e => e === true )
+      return value.length <= max
     }
 
     return true

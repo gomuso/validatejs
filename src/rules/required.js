@@ -1,6 +1,6 @@
-export default class NotBlank {
+export default class Required {
   name() {
-    return 'NotBlank'
+    return 'Required'
   }
 
   execute( value ) {

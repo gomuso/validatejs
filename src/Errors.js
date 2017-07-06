@@ -30,28 +30,52 @@ export default class Validator {
     return readable
   }
 
+  /**
+   * Creates an error string for a given field and set of rules
+   *
+   * @param  {string} field
+   * @param  {array} rules
+   * @return {string}
+   */
   _formatErrorsForField( field, rules ) {
     const errors = _.filter( rules, r => !_.isUndefined( r ) )
 
-    const sorted = _.sortBy( errors, e => e.name() === 'NotBlank' ).reverse()
+    const sorted = _.sortBy( errors, e => e.name() === 'Required' ).reverse()
 
     const length = sorted.length
     const mapErrors = _.map( sorted, e => e.error() )
     const errorString = _.join( mapErrors, length === 2 ? ' and ' : ', ' )
 
-    const firstPart = sorted[ 0 ].name() === 'NotBlank' ? '' : ' should be'
+    const firstIsNotBlank = sorted[ 0 ].name() === 'Required'
+    const firstPart = firstIsNotBlank ? ' ' : ' should be '
 
-    return `${ this.formatFieldName( field ) }${ firstPart } ${ errorString }`
+    let validation = this._formatFieldName( field )
+
+    validation += firstPart
+
+    validation += errorString
+
+    // if firstIsNotBlank replace first and with and should be
+    if ( rules.length >= 2 && firstIsNotBlank ) {
+      validation = validation.replace( 'and', 'and should be' )
+    }
+
+    return validation
   }
 
-  formatFieldName( field ) {
+  /**
+   * Formats a field name.
+   * -> firstName => First name
+   *
+   * @param  {string} field
+   * @return {string}
+   */
+  _formatFieldName( field ) {
     if ( _.get( this._options, field ) ) {
       return _.get( this._options, field )
     }
 
     const upperFirst = _.upperFirst( field )
-    const split = upperFirst.split( /(?=[A-Z])/ ).join( ' ' )
-
-    return split
+    return upperFirst.split( /(?=[A-Z])/ ).join( ' ' )
   }
 }

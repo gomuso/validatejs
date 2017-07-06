@@ -1,5 +1,6 @@
 import _ from 'lodash'
 
+import RuleParser from './RuleParser'
 import Errors from './Errors'
 
 export default class Validator {
@@ -15,8 +16,10 @@ export default class Validator {
   static check( data, validate, options ) {
     const errors = {}
 
-    _.forEach( validate, ( rules, field ) => {
+    _.forEach( validate, ( ruleString, field ) => {
       errors[ field ] = []
+
+      const rules = RuleParser.parseString( ruleString )
 
       _.forEach( rules, ( Rule ) => {
         const truthy = Rule.execute( _.get( data, field ) )

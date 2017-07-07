@@ -47,7 +47,7 @@ if (validation.failed()) {
 
 ## Guides and examples
 
-### How errors are displayed
+### How errors are displayed
 
 The errors are generated based on the field name and the rules. Our internal convention for fieldnames
 is camelcase so we decided to split the fieldname by uppercase letters. For example:

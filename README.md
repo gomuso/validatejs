@@ -1,5 +1,3 @@
-![Logo of the project](./logo.sample.png)
-
 # ValidateJS
 > An easy to use javascript library to validate form data and object structures.
 
@@ -89,7 +87,7 @@ npm run test
 
 ## Style guide
 
-We're following the airbnb [javascript style guide](https://github.com/airbnb/javascript) with a few tweaks.  
+We're following the [airbnb javascript style guide](https://github.com/airbnb/javascript) with a few tweaks.  
 To check your code style run:
 
 ```shell

@@ -45,6 +45,39 @@ if (validation.failed()) {
 4. Define your validation rules
 5. Check for errors
 
+## More Examples
+
+### Custom field names in error messages
+
+It might happen that you have a name for a field within the code that you don't want to expose
+to the user - either because you don't want them to know or because they wouldn't understand.
+
+For example:
+- slug => for the user it's more a URL
+- dob => date of birth
+
+For that reason we have implemented an overwrite function where you can define display names for your fields:
+
+```javascript
+const validation = Validator.check(data, {
+  id: 'required, type:int',
+  slug: 'required, type:alphanum, max:15',
+  dob: 'type:int, min:01011900, max:12122017',
+}, {
+  // define custom display values
+  slug: 'Custom URL',
+  dob: 'Date of Birth'
+})
+```
+
+Now if you the validation fails you would receive this output:
+```javascript
+{
+  slug: 'Custom URL is required',
+  dob: 'Date of birth should be of type int'
+}
+```
+
 ## Developing
 
 ### Built With

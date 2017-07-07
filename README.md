@@ -95,7 +95,7 @@ Now if you the validation fails you would receive this output:
 }
 ```
 
-### Custom error messages for fields
+### Custom error messages for fields
 
 You might not like the error string that is being returned from this library. It may look something like this:
 ```

@@ -29,7 +29,7 @@ const validation = Validator.check( formdata, {
    firstName: 'required, type:alphanum, min:2, max:10',
    email: 'required, email',
    age: 'required, min:10, max:50',
-   'luckyNumbers.*': 'int'
+   'luckyNumbers.*': 'type:int'
 } )
 
 if (validation.failed()) {

@@ -82,12 +82,23 @@ export default class Validator {
       return _.get(this._customFieldNames, field)
     }
 
+    // nested object
+    if (field.indexOf('.*.') > -1) {
+      const splitField = field.split('.*.')
+      const getArrayField = _.first(splitField)
+      const getObjectKey = _.last(splitField)
+
+      return `Item ${getObjectKey} in ${getArrayField}`
+    }
+
+    // nested array
     if (field.indexOf('*') > -1) {
       const stripped = field.replace('.*', '')
 
       return `Elements in ${stripped}`
     }
 
+    // standard
     const upperFirst = _.upperFirst(field)
     return upperFirst.split(/(?=[A-Z])/).join(' ')
   }

@@ -6,7 +6,9 @@ This library has been written by our team to easily validate form data coming fr
 #### Main Features
 
 - Easy, distraction free syntax
-- custom error messaging
+- Custom error messaging
+- Validate nested arrays
+- Validate nested objects within arrays
 
 ## Contributing to this repo
 
@@ -31,7 +33,12 @@ const data = {
   firstName: 'John_Doe',
   email: 'test@gmail.com',
   age: 25,
-  luckyNumbers: [20, 12, 394, '8']
+  luckyNumbers: [20, 12, 394, '8'],
+  homeTown: {
+    city: 'London-City',
+    country: 'UK',
+    zipcode: '12345'
+  }
 }
 
 const validation = Validator.check(data, {
@@ -40,7 +47,11 @@ const validation = Validator.check(data, {
   email: 'required, email',
   age: 'type:int, min:10, max:50',
   luckyNumbers: 'type:array',
-  'luckyNumbers.*': 'type:int'
+  'luckyNumbers.*': 'type:int',
+  homeTown: 'required, type:object',
+  'homeTown.city': 'type:alphanum',
+  'homeTown.country': 'type:alphanum, min:2, max:2',
+  'homeTown.zipcode': 'type:int'
 })
 
 if (validation.failed()) {

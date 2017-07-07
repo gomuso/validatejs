@@ -38,7 +38,11 @@ const data = {
     city: 'London-City',
     country: 'UK',
     zipcode: '12345'
-  }
+  },
+  links: [
+    { id: '1', url: 1920303003 },
+    { id: 2, url: 'www.facebook.com' }
+  ]
 }
 
 const validation = Validator.check(data, {
@@ -51,7 +55,10 @@ const validation = Validator.check(data, {
   homeTown: 'required, type:object',
   'homeTown.city': 'type:alphanum',
   'homeTown.country': 'type:alphanum, min:2, max:2',
-  'homeTown.zipcode': 'type:int'
+  'homeTown.zipcode': 'type:int',
+  links: 'type:array',
+  'links.*.id': 'type:int',
+  'links.*.url': 'type:string'
 })
 
 if (validation.failed()) {

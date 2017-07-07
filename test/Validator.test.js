@@ -8,7 +8,10 @@ test('It should pass the validation', () => {
     name: 'John',
     email: 'john@gmail.com',
     age: 23,
-    numbers: [1, 2, 3, 4]
+    numbers: [1, 2, 3, 4],
+    links: [
+      { id: 1, url: 'www.google.com' }
+    ]
   }
 
   const validation = Validator.check(data, {
@@ -17,7 +20,10 @@ test('It should pass the validation', () => {
     email: 'required, email',
     age: 'required, type:int, min:10, max:50',
     numbers: 'type:array',
-    'numbers.*': 'type:int'
+    'numbers.*': 'type:int',
+    links: 'type:array',
+    'links.*.id': 'type:int',
+    'links.*.url': 'type:string'
   })
 
   expect(validation.failed()).toBe(false)
@@ -34,7 +40,11 @@ test('Test the example on Readme', () => {
       city: 'London-City',
       country: 'UK',
       zipcode: '12345'
-    }
+    },
+    links: [
+      { id: '1', url: 1920303003 },
+      { id: 2, url: 'www.facebook.com' }
+    ]
   }
 
   const validation = Validator.check(data, {
@@ -47,14 +57,19 @@ test('Test the example on Readme', () => {
     homeTown: 'required, type:object',
     'homeTown.city': 'type:alphanum',
     'homeTown.country': 'type:alphanum, min:2, max:2',
-    'homeTown.zipcode': 'type:int'
+    'homeTown.zipcode': 'type:int',
+    links: 'type:array',
+    'links.*.id': 'type:int',
+    'links.*.url': 'type:string'
   })
 
   expect(validation.failed()).toBe(true)
 
   const errors = _.keys(validation.errors())
-  expect(errors).toHaveLength(4)
-  expect(errors).toEqual(['firstName', 'luckyNumbers.*', 'homeTown.city', 'homeTown.zipcode'])
+  expect(errors).toHaveLength(6)
+  expect(errors).toEqual([
+    'firstName', 'luckyNumbers.*', 'homeTown.city', 'homeTown.zipcode', 'links.*.id', 'links.*.url'
+  ])
 })
 
 test('Do not validate non-required fields if they are not present', () => {
@@ -150,7 +165,7 @@ test('Validate nested objects', () => {
   expect(errors).toEqual(['name.middle', 'name.family'])
 })
 
-test.only('Validate objects nested within an array', () => {
+test('Validate objects nested within an array', () => {
   const data = {
     links: [
       { id: '1', url: 'www.google.com' },

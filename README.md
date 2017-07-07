@@ -16,26 +16,26 @@ npm install --save gomuso-validatejs
 ```javascript
 import Validator from 'gomuso-validatejs'
 
-const formData = {
-   id: 1,
-   firstName: 'John_Doe',
-   email: 'test@gmail.com',
-   age: 25,
-   luckyNumbers: [ 20, 12, 394, '8' ]
+const data = {
+  id: 1,
+  firstName: 'John_Doe',
+  email: 'test@gmail.com',
+  age: 25,
+  luckyNumbers: [20, 12, 394, '8']
 }
 
-const validation = Validator.check( formdata, {
-   id: 'required, int',
-   firstName: 'required, type:alphanum, min:2, max:10',
-   email: 'required, email',
-   age: 'type:int, min:10, max:50',
-   luckyNumbers: 'type:array',
-   'luckyNumbers.*': 'type:int'
-} )
+const validation = Validator.check(data, {
+  id: 'required, type:int',
+  firstName: 'required, type:alphanum, min:2, max:10',
+  email: 'required, email',
+  age: 'type:int, min:10, max:50',
+  luckyNumbers: 'type:array',
+  'luckyNumbers.*': 'type:int'
+})
 
 if (validation.failed()) {
-   // do something with your errors
-   console.log(validation.errors())
+  // do something with your errors
+  console.log(validation.errors())
 }
 ```
 
@@ -92,7 +92,7 @@ npm run test
 
 ## Style guide
 
-We're following the [airbnb javascript style guide](https://github.com/airbnb/javascript) with a few tweaks.  
+We're following the [airbnb javascript style guide](https://github.com/airbnb/javascript) with a few tweaks.
 To check your code style run:
 
 ```shell

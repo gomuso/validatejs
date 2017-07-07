@@ -2,6 +2,31 @@ import _ from 'lodash'
 
 import Validator from '../src/Validator'
 
+test('Test the example on Readme', () => {
+  const data = {
+    id: 1,
+    firstName: 'John_Doe',
+    email: 'test@gmail.com',
+    age: 25,
+    luckyNumbers: [20, 12, 394, '8']
+  }
+
+  const validation = Validator.check(data, {
+    id: 'required, type:int',
+    firstName: 'required, type:alphanum, min:2, max:10',
+    email: 'required, email',
+    age: 'type:int, min:10, max:50',
+    luckyNumbers: 'type:array',
+    'luckyNumbers.*': 'type:int'
+  })
+
+  expect(validation.failed()).toBe(true)
+
+  const errors = _.keys(validation.errors())
+  expect(errors).toHaveLength(2)
+  expect(errors).toEqual(['firstName', 'luckyNumbers.*'])
+})
+
 test('Do not validate non-required fields if they are not present', () => {
   const data = {
     id: '1'

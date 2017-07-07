@@ -30,7 +30,7 @@ export default class Validator {
         return
       }
 
-      errors[field] = []
+      const currentErrors = errors[field] || []
 
       const rules = RuleParser.parseString(ruleString)
 
@@ -43,14 +43,14 @@ export default class Validator {
             const passed = _.filter(truthy, t => !t).length === 0
 
             if (!passed) {
-              errors[field] = [...errors[field], Rule]
+              errors[field] = [...currentErrors, Rule]
             }
           }
         } else {
           const truthy = Rule.execute(_.get(data, field))
 
           if (!truthy) {
-            errors[field] = [...errors[field], Rule]
+            errors[field] = [...currentErrors, Rule]
           }
         }
       })

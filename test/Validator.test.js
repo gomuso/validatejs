@@ -2,6 +2,24 @@ import _ from 'lodash'
 
 import Validator from '../src/Validator'
 
+test.only('It should pass the validation', () => {
+  const data = {
+    id: 1,
+    name: 'John',
+    email: 'john@gmail.com',
+    age: 23
+  }
+
+  const validation = Validator.check(data, {
+    id: 'required, type:int',
+    name: 'required, type:alphanum, min:2, max:10',
+    email: 'required, email',
+    age: 'required, type:int, min:10, max:50'
+  })
+
+  expect(validation.failed()).toBe(false)
+})
+
 test('Test the example on Readme', () => {
   const data = {
     id: 1,

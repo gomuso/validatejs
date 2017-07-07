@@ -1,9 +1,9 @@
 {
   "name": "muso-validatejs",
-  "version": "0.1.1",
+  "version": "0.1.3",
   "description": "A javascript library to simply validate (form) data",
-  "main": "src/index.js",
-  "module": "src/index.js",
+  "main": "lib/validate.min.js",
+  "module": "lib/validate.min.js",
   "scripts": {
     "prepublish": "npm run build",
     "build": "webpack -p",

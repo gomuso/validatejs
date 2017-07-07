@@ -13,7 +13,7 @@ export default class Validator {
    * @return {bool}
    */
   failed() {
-    return !_.isEmpty(this._errors)
+    return _.keys(this.errors).length > 0 || !_.isEmpty(this._errors)
   }
 
   /**

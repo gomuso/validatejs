@@ -7,8 +7,8 @@ module.exports = {
   entry: './src/index.js',
   output: {
     path: path.resolve(__dirname, 'lib'),
-    filename: 'validate.js',
-    library: 'validatejs',
+    filename: 'validate.min.js',
+    library: 'muso-validatejs',
     libraryTarget: 'umd'
   },
   externals: {
@@ -29,6 +29,6 @@ module.exports = {
     ]
   },
   plugins: [
-    new UglifyJsPlugin({ minimize: false })
+    new UglifyJsPlugin({ minimize: true })
   ]
 }

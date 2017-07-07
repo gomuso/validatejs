@@ -3,6 +3,11 @@
 
 This library has been written by our team to easily validate form data coming from our apps and websites. After looking through the internet we couldn't really find anything that we liked - either because of lacking functionality, too much functionality or just a shitty syntax.
 
+#### Main Features
+
+- Easy, distraction free syntax
+- custom error messaging
+
 ## Contributing to this repo
 
 This project is a lunch time project so the time to work on this is limited. However, we hope you like this library

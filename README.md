@@ -68,6 +68,22 @@ if (validation.failed()) {
 
 ## Guides and examples
 
+### Overview of the rules
+
+| Rule           | Keyword         | Description  |
+| -------------- | --------------- | -------------|
+| Required       | `required`      | This key has to exist in the data object and cannot be blank
+| Email          | `email`         | Matches a (simple) email address format
+| Length: Min    | `length:min`    | Requires a minimum length for a string, array length or minimum number
+| Length: Max    | `length:max`    | Requires a maximum length for a string, array length or minimum number
+| Type: String   | `type:string`   | Matches everything that is a string
+| Type: Integer  | `type:int`      | Matches everything that is an integer
+| Type: Number   | `type:number`   | Matches everything that is a number
+| Type: Alphanum | `type:alphanum` | Matches everything that is alpha numerical
+| Type: Array    | `type:array`    | Matches everything that is an array
+| Type: Object   | `type:object`   | Matches everything that is an object
+| Type: Boolean  | `type:bool`     | Matches everything that is a boolean
+
 ### How the default errors are generated
 
 The errors are generated based on the field name and the rules. Our internal convention for fieldnames

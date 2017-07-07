@@ -68,7 +68,7 @@ if (validation.failed()) {
 
 ## Guides and examples
 
-### Overview of the rules
+### Overview of the available rules
 
 | Rule           | Keyword         | Description  |
 | -------------- | --------------- | -------------|

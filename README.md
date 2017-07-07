@@ -13,13 +13,13 @@ and use it. If you have any ideas for improvements and new features feel free to
 A quick introduction of the minimal setup you need to get a hello world up & running.
 
 ```shell
-yarn add gomuso-validatejs
+yarn add muso-validatejs
 or
-npm install --save gomuso-validatejs
+npm install --save muso-validatejs
 ```
 
 ```javascript
-import Validator from 'gomuso-validatejs'
+import Validator from 'muso-validatejs'
 
 const data = {
   id: 1,

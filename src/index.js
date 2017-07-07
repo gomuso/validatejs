@@ -1,3 +1,3 @@
-import Validator from './Validator'
+const Validator = require('./Validator')
 
-export default Validator
+module.exports = Validator

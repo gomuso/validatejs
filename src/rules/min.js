@@ -1,7 +1,7 @@
 import Length from './length'
 
 export default class Min {
-  constructor( options ) {
+  constructor(options) {
     this._options = options
     this._errorMsg = ''
   }
@@ -10,10 +10,10 @@ export default class Min {
     return 'Min'
   }
 
-  execute( value ) {
-    const lengthRule = new Length( { min: this._options } )
+  execute(value) {
+    const lengthRule = new Length({ min: this._options })
 
-    return lengthRule.execute( value )
+    return lengthRule.execute(value)
   }
 
   error() {

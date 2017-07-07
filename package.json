@@ -7,8 +7,8 @@
   "scripts": {
     "build": "webpack -p",
     "test": "jest",
-    "lint": "./node_modules/.bin/eslint src",
-    "lint:fix": "./node_modules/.bin/eslint src --fix"
+    "lint": "./node_modules/.bin/eslint src test",
+    "lint:fix": "./node_modules/.bin/eslint src test --fix"
   },
   "repository": {
     "type": "git",

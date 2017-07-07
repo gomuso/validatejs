@@ -1,7 +1,7 @@
 import _ from 'lodash'
 
 export default class Type {
-  constructor( type ) {
+  constructor(type) {
     this._type = type
   }
 
@@ -9,28 +9,28 @@ export default class Type {
     return 'Type'
   }
 
-  execute( value ) {
-    switch ( this._type ) {
+  execute(value) {
+    switch (this._type) {
       case 'string':
-        return _.isString( value )
+        return _.isString(value)
       case 'int':
-        return _.isInteger( value )
+        return _.isInteger(value)
       case 'number':
-        return _.isNumber( value )
+        return _.isNumber(value)
       case 'alphanum':
-        return new RegExp( /^[a-z0-9]+$/i ).test( value )
+        return new RegExp(/^[a-z0-9]+$/i).test(value)
       case 'array':
-        return _.isArray( value )
+        return _.isArray(value)
       case 'object':
-        return _.isObject( value ) && !_.isArray( value )
+        return _.isObject(value) && !_.isArray(value)
       case 'bool':
-        return _.isBoolean( value )
+        return _.isBoolean(value)
       default:
         return false
     }
   }
 
   error() {
-    return `of type ${ this._type }`
+    return `of type ${this._type}`
   }
 }

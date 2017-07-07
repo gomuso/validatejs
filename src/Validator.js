@@ -16,20 +16,20 @@ export default class Validator {
   static check( data, validate, options ) {
     const errors = {}
 
-    _.forEach( validate, ( ruleString, field ) => {
-      errors[ field ] = []
+    _.forEach(validate, (ruleString, field) => {
+      errors[field] = []
 
-      const rules = RuleParser.parseString( ruleString )
+      const rules = RuleParser.parseString(ruleString)
 
-      _.forEach( rules, ( Rule ) => {
-        const truthy = Rule.execute( _.get( data, field ) )
+      _.forEach(rules, (Rule) => {
+        const truthy = Rule.execute(_.get(data, field))
 
-        if ( !truthy ) {
-          errors[ field ] = [ ...errors[ field ], Rule ]
+        if (!truthy) {
+          errors[field] = [...errors[field], Rule]
         }
-      } )
-    } )
+      })
+    })
 
-    return new Errors( errors, options )
+    return new Errors(errors, options)
   }
 }

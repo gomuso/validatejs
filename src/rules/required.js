@@ -3,8 +3,8 @@ export default class Required {
     return 'Required'
   }
 
-  execute( value ) {
-    if ( !value || value === '' ) {
+  execute(value) {
+    if (!value || value === '') {
       return false
     }
 

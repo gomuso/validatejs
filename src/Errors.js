@@ -1,7 +1,7 @@
 import _ from 'lodash'
 
 export default class Validator {
-  constructor( errors, options = {} ) {
+  constructor(errors, options = {}) {
     this._errors = errors
     this._options = options
   }
@@ -12,7 +12,7 @@ export default class Validator {
    * @return {bool}
    */
   failed() {
-    return !_.isEmpty( this._errors )
+    return !_.isEmpty(this._errors)
   }
 
   /**
@@ -23,9 +23,9 @@ export default class Validator {
   errors() {
     const readable = {}
 
-    _.forEach( this._errors, ( rules, field ) => {
-      readable[ field ] = this._formatErrorsForField( field, rules )
-    } )
+    _.forEach(this._errors, (rules, field) => {
+      readable[field] = this._formatErrorsForField(field, rules)
+    })
 
     return readable
   }
@@ -37,27 +37,27 @@ export default class Validator {
    * @param  {array} rules
    * @return {string}
    */
-  _formatErrorsForField( field, rules ) {
-    const errors = _.filter( rules, r => !_.isUndefined( r ) )
+  _formatErrorsForField(field, rules) {
+    const errors = _.filter(rules, r => !_.isUndefined(r))
 
-    const sorted = _.sortBy( errors, e => e.name() === 'Required' ).reverse()
+    const sorted = _.sortBy(errors, e => e.name() === 'Required').reverse()
 
     const length = sorted.length
-    const mapErrors = _.map( sorted, e => e.error() )
-    const errorString = _.join( mapErrors, length === 2 ? ' and ' : ', ' )
+    const mapErrors = _.map(sorted, e => e.error())
+    const errorString = _.join(mapErrors, length === 2 ? ' and ' : ', ')
 
-    const firstIsNotBlank = sorted[ 0 ].name() === 'Required'
+    const firstIsNotBlank = sorted[0].name() === 'Required'
     const firstPart = firstIsNotBlank ? ' ' : ' should be '
 
-    let validation = this._formatFieldName( field )
+    let validation = this._formatFieldName(field)
 
     validation += firstPart
 
     validation += errorString
 
     // if firstIsNotBlank replace first and with and should be
-    if ( rules.length >= 2 && firstIsNotBlank ) {
-      validation = validation.replace( 'and', 'and should be' )
+    if (rules.length >= 2 && firstIsNotBlank) {
+      validation = validation.replace('and', 'and should be')
     }
 
     return validation
@@ -70,12 +70,12 @@ export default class Validator {
    * @param  {string} field
    * @return {string}
    */
-  _formatFieldName( field ) {
-    if ( _.get( this._options, field ) ) {
-      return _.get( this._options, field )
+  _formatFieldName(field) {
+    if (_.get(this._options, field)) {
+      return _.get(this._options, field)
     }
 
-    const upperFirst = _.upperFirst( field )
-    return upperFirst.split( /(?=[A-Z])/ ).join( ' ' )
+    const upperFirst = _.upperFirst(field)
+    return upperFirst.split(/(?=[A-Z])/).join(' ')
   }
 }

@@ -1,7 +1,7 @@
 import Length from './length'
 
 export default class Max {
-  constructor( options ) {
+  constructor(options) {
     this._options = options
     this._errorMsg = ''
   }
@@ -10,10 +10,10 @@ export default class Max {
     return 'Max'
   }
 
-  execute( value ) {
-    const lengthRule = new Length( { max: this._options } )
+  execute(value) {
+    const lengthRule = new Length({ max: this._options })
 
-    return lengthRule.execute( value )
+    return lengthRule.execute(value)
   }
 
   error() {

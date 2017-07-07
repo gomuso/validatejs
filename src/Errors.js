@@ -24,7 +24,9 @@ export default class Validator {
     const readable = {}
 
     _.forEach(this._errors, (rules, field) => {
-      readable[field] = this._formatErrorsForField(field, rules)
+      if (rules.length > 0) {
+        readable[field] = this._formatErrorsForField(field, rules)
+      }
     })
 
     return readable
@@ -73,6 +75,12 @@ export default class Validator {
   _formatFieldName(field) {
     if (_.get(this._options, field)) {
       return _.get(this._options, field)
+    }
+
+    if (field.indexOf('*') > -1) {
+      const stripped = field.replace('.*', '')
+
+      return `Elements in ${stripped}`
     }
 
     const upperFirst = _.upperFirst(field)

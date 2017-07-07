@@ -19,13 +19,17 @@ import Validator from 'gomuso-validatejs'
 const formData = {
    id: 1,
    firstName: 'John_Doe',
-   email: 'test@gmail.com'
+   email: 'test@gmail.com',
+   age: 25,
+   luckyNumbers: [ 20, 12, 394, '8' ]
 }
 
 const validation = Validator.check( formdata, {
    id: 'required, int',
    firstName: 'required, type:alphanum, min:2, max:10',
-   email: 'required, email'
+   email: 'required, email',
+   age: 'required, min:10, max:50',
+   'luckyNumbers.*': 'int'
 } )
 
 if (validation.failed()) {

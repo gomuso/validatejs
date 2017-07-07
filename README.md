@@ -3,6 +3,11 @@
 
 This library has been written by our team to easily validate form data coming from our apps and websites. After looking through the internet we couldn't really find anything that we liked - either because of lacking functionality, too much functionality or just a shitty syntax.
 
+## Contributing to this repo
+
+This project is a lunch time project so the time to work on this is limited. However, we hope you like this library
+and use it. If you have any ideas for improvements and new features feel free to create a PR!
+
 ## Installing / Getting started
 
 A quick introduction of the minimal setup you need to get a hello world up & running.
@@ -117,7 +122,7 @@ const validation = Validator.check(data, {
 Your returned error would look like:
 ```javascript
 {
-  firstName: 'First name is invalid'
+  firstName: 'First name is invalid!'
 }
 ```
 

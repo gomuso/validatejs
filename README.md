@@ -3,6 +3,11 @@
 
 This library has been written by our team to easily validate form data coming from our apps and websites. After looking through the internet we couldn't really find anything that we liked - either because of lacking functionality, too much functionality or just a shitty syntax.
 
+#### Main Features
+
+- Easy, distraction free syntax
+- custom error messaging
+
 ## Contributing to this repo
 
 This project is a lunch time project so the time to work on this is limited. However, we hope you like this library
@@ -52,13 +57,13 @@ if (validation.failed()) {
 
 ## Guides and examples
 
-### How errors are displayed
+### How the default errors are generated
 
 The errors are generated based on the field name and the rules. Our internal convention for fieldnames
 is camelcase so we decided to split the fieldname by uppercase letters. For example:
 
-firstName => First name
-dateOfBirth => Date of birth
+- firstName => First name
+- dateOfBirth => Date of birth
 
 In addition to that we're generating a string for every rule that failed and concat those. If for example
 the required and minimum length rule failed we'd generate the following error:

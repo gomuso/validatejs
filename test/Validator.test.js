@@ -56,7 +56,7 @@ test('Validate required fields', () => {
   expect(errors).toEqual(['email', 'age'])
 })
 
-test.only('Validate simple nested fields', () => {
+test('Validate simple nested fields', () => {
   const data = {
     dates: [20170303, 20172009, '20183030']
   }

@@ -1,7 +1,7 @@
 {
   "name": "validatejs",
-  "version": "1.0.0",
-  "description": "A javascript library to validate (form) data",
+  "version": "0.1.0",
+  "description": "A javascript library to simply validate (form) data",
   "main": "library/validate.js",
   "module": "src/index.js",
   "scripts": {

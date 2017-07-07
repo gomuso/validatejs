@@ -1,10 +1,13 @@
-var path = require('path');
+const webpack = require('webpack')
+const path = require('path')
+
+const UglifyJsPlugin = webpack.optimize.UglifyJsPlugin
 
 module.exports = {
     entry: './src/index.js',
     output: {
         path: path.resolve(__dirname, 'lib'),
-        filename: 'validate.js',
+        filename: 'validate.min.js',
         library: 'validatejs',
         libraryTarget: 'umd'
     },
@@ -15,5 +18,17 @@ module.exports = {
             amd: "lodash",
             root: "_"
         }
-    }
-};
+    },
+    module: {
+        rules: [
+          {
+            test: /(\.jsx|\.js)$/,
+            loader: 'babel-loader',
+            exclude: /(node_modules|bower_components)/
+          }
+        ]
+    },
+    plugins: [
+        new UglifyJsPlugin({minimize: true})
+    ]
+}

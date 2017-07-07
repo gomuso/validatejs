@@ -3,7 +3,7 @@ import _ from 'lodash'
 import * as rules from './rules'
 
 export default class RuleParser {
-  static parseString = (ruleString) => {
+  static parseString(ruleString) {
     if (!ruleString) {
       return []
     }

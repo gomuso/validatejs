@@ -1,2 +1,3 @@
-export Validator from './Validator'
-export Rules from './rules'
+import Validator from './Validator'
+
+export default Validator

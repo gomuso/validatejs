@@ -57,13 +57,13 @@ if (validation.failed()) {
 
 ## Guides and examples
 
-### How errors are displayed
+### How the default errors are generated
 
 The errors are generated based on the field name and the rules. Our internal convention for fieldnames
 is camelcase so we decided to split the fieldname by uppercase letters. For example:
 
-firstName => First name
-dateOfBirth => Date of birth
+- firstName => First name
+- dateOfBirth => Date of birth
 
 In addition to that we're generating a string for every rule that failed and concat those. If for example
 the required and minimum length rule failed we'd generate the following error:

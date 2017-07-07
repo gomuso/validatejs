@@ -1,9 +1,10 @@
 import _ from 'lodash'
 
 export default class Validator {
-  constructor(errors, options = {}) {
+  constructor(errors, customFieldNames = {}, customErrorMessages = {}) {
     this._errors = errors
-    this._options = options
+    this._customFieldNames = customFieldNames
+    this._customErrorMessages = customErrorMessages
   }
 
   /**
@@ -51,6 +52,10 @@ export default class Validator {
     const firstIsNotBlank = sorted[0].name() === 'Required'
     const firstPart = firstIsNotBlank ? ' ' : ' should be '
 
+    if (_.get(this._customErrorMessages, field)) {
+      return _.get(this._customErrorMessages, field)
+    }
+
     let validation = this._formatFieldName(field)
 
     validation += firstPart
@@ -73,8 +78,8 @@ export default class Validator {
    * @return {string}
    */
   _formatFieldName(field) {
-    if (_.get(this._options, field)) {
-      return _.get(this._options, field)
+    if (_.get(this._customFieldNames, field)) {
+      return _.get(this._customFieldNames, field)
     }
 
     if (field.indexOf('*') > -1) {

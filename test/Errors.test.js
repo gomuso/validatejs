@@ -30,3 +30,23 @@ describe('Return readable errors', () => {
     })
   })
 })
+
+test('Overwrite field names in error messages', () => {
+  const errors = new Errors({
+    dob: [new Rules.Required()]
+  }, { dob: 'Date of birth' })
+
+  expect(errors.errors()).toEqual({
+    dob: 'Date of birth is required'
+  })
+})
+
+test('Set custom error messages', () => {
+  const errors = new Errors({
+    dob: [new Rules.Required()]
+  }, {}, { dob: 'Please provide your date of birth' })
+
+  expect(errors.errors()).toEqual({
+    dob: 'Please provide your date of birth'
+  })
+})

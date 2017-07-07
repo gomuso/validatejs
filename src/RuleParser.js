@@ -13,7 +13,9 @@ export default class RuleParser {
             .map((x) => {
               const split = x.trim().split(':')
 
-              return { rule: split[0], args: split[1] }
+              const args = split[1] ? split[1].trim() : null
+
+              return { rule: split[0].trim(), args }
             })
             .map(({ rule, args }) => {
               if (rule === 'required') {

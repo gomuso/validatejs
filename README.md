@@ -45,7 +45,24 @@ if (validation.failed()) {
 4. Define your validation rules
 5. Check for errors
 
-## More Examples
+## Guides and examples
+
+### How errors are displayed
+
+The errors are generated based on the field name and the rules. Our internal convention for fieldnames
+is camelcase so we decided to split the fieldname by uppercase letters. For example:
+
+firstName => First name
+dateOfBirth => Date of birth
+
+In addition to that we're generating a string for every rule that failed and concat those. If for example
+the required and minimum length rule failed we'd generate the following error:
+```
+First name is required and should be at least 2 characters long
+```
+
+We decided to concat all rules because you can see all requirements straight away rather than having to validate again.
+
 
 ### Custom field names in error messages
 
@@ -75,6 +92,32 @@ Now if you the validation fails you would receive this output:
 {
   slug: 'Custom URL is required',
   dob: 'Date of birth should be of type int'
+}
+```
+
+### Custom error messages for fields
+
+You might not like the error string that is being returned from this library. It may look something like this:
+```
+First name is required and should be between 2 and 10 characters long
+```
+
+The messages can get quite long and you might not have that much space in your interface. Therefore, you have
+the option to overwrite the error messages returned for a field.
+
+```javascript
+const validation = Validator.check(data, {
+  id: 'required, type:int',
+  firstName: 'required, type:alphanum, min:2, max:10'
+}, null, {
+  firstName: 'First name is invalid!'
+})
+```
+
+Your returned error would look like:
+```javascript
+{
+  firstName: 'First name is invalid'
 }
 ```
 

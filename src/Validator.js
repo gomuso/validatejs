@@ -10,10 +10,11 @@ export default class Validator {
    *
    * @param  {Object}  data
    * @param  {array}   validate
-   * @param  {Options} options
+   * @param  {Object}  customFieldNames
+   * @param  {Object}  customErrorMessages
    * @return {Errors}
    */
-  static check(data, validate, options) {
+  static check(data, validate, customFieldNames, customErrorMessages) {
     const errors = {}
 
     _.forEach(validate, (ruleString, field) => {
@@ -55,6 +56,6 @@ export default class Validator {
       })
     })
 
-    return new Errors(errors, options)
+    return new Errors(errors, customFieldNames, customErrorMessages)
   }
 }

@@ -28,7 +28,8 @@ const validation = Validator.check( formdata, {
    id: 'required, int',
    firstName: 'required, type:alphanum, min:2, max:10',
    email: 'required, email',
-   age: 'required, min:10, max:50',
+   age: 'type:int, min:10, max:50',
+   luckyNumbers: 'type:array',
    'luckyNumbers.*': 'type:int'
 } )
 

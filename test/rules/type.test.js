@@ -1,6 +1,12 @@
 import { Type } from '../../src/rules'
 
 describe('it tests for a variables type', () => {
+  test('test if type is valid option', () => {
+    expect(() =>
+      new Type('bla')
+    ).toThrow()
+  })
+
   test('it tests for type string', () => {
     expect((new Type('string')).execute(null)).toBe(false)
     expect((new Type('string')).execute(123)).toBe(false)

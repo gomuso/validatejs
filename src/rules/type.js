@@ -1,12 +1,20 @@
 import _ from 'lodash'
 
-export default class Type {
-  constructor(type) {
-    this._type = type
-  }
+import AbstractRule from './AbstractRule'
 
-  name() {
-    return 'Type'
+const VALID_TYPES = [
+  'string', 'int', 'number', 'alphanum', 'array', 'object', 'bool'
+]
+
+export default class Type extends AbstractRule {
+  constructor(type) {
+    super(type)
+
+    if (VALID_TYPES.indexOf(type) === -1) {
+      throw new Error('Invalid type')
+    }
+
+    this._type = type
   }
 
   execute(value) {
@@ -26,11 +34,7 @@ export default class Type {
       case 'bool':
         return _.isBoolean(value)
       default:
-        return false
+        throw new Error('Invalid type')
     }
-  }
-
-  error() {
-    return `of type ${this._type}`
   }
 }

@@ -1,52 +1,49 @@
 import _ from 'lodash'
 
-export default class Length {
-  constructor(options) {
-    this._options = options
-    this._errorMsg = ''
-  }
+import AbstractRule from './AbstractRule'
 
-  name() {
-    return 'Length'
+export default class Length extends AbstractRule {
+  constructor({ min = null, max = null }) {
+    super()
+
+    this._min = min
+    this._max = max
   }
 
   execute(value) {
-    const { min, max } = this._options
+    const min = this._min
+    const max = this._max
 
-    // check for array length
-    if (_.isArray(value)) {
-      this._errorMsg = `length of ${this._options}`
-
-      if (min) {
+    // check for minimum values
+    if (min) {
+      if (_.isArray(value)) {
         return value.length >= min
       }
 
-      return value.length <= max
-    }
-
-
-    // check for number min and max
-    if (_.isNumber(value)) {
-      if (min) {
+      if (_.isNumber(value)) {
         return value >= min
       }
 
-      return value <= max
-    }
-
-    // check for string length
-    if (_.isString(value)) {
-      if (min) {
+      if (_.isString(value)) {
         return value.length >= min
       }
+    }
 
-      return value.length <= max
+    // check for maximum values
+    if (max) {
+      if (_.isArray(value)) {
+        return value.length <= max
+      }
+
+      if (_.isNumber(value)) {
+        return value <= max
+      }
+
+      if (_.isString(value)) {
+        return value.length <= max
+      }
     }
 
     return true
-  }
-
-  error() {
-    return this._errorMsg
   }
 }

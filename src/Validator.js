@@ -1,20 +1,30 @@
 import _ from 'lodash'
 
 import RuleParser from './RuleParser'
-import Errors from './Errors'
-import { Required } from './rules'
+import Formatter from './Formatter'
 
 export default class Validator {
+  /**
+   * @param  {Object} errors
+   * @param  {Object} customFieldNames
+   * @param  {Object} customErrorMessages
+   */
+  constructor(errors, customFieldNames = null, customErrorMessages = null) {
+    this._errors = errors
+
+    this._formatter = new Formatter(errors, customFieldNames, customErrorMessages)
+  }
+
   /**
    * check rules for given data
    *
    * @param  {Object}  data
-   * @param  {array}   validate
+   * @param  {Object}  validate
    * @param  {Object}  customFieldNames
    * @param  {Object}  customErrorMessages
    * @return {Errors}
    */
-  static check(data, validate, customFieldNames, customErrorMessages) {
+  static check(data, validate, customFieldNames = null, customErrorMessages = null) {
     const errors = {}
 
     _.forEach(validate, (ruleString, field) => {
@@ -27,7 +37,7 @@ export default class Validator {
       }
 
       if (isRequired && !_.get(data, field) && !isNested && !isNestedObject) {
-        errors[field] = [new Required()]
+        errors[field] = [ruleString]
         return
       }
 
@@ -35,7 +45,7 @@ export default class Validator {
 
       const rules = RuleParser.parseString(ruleString)
 
-      _.forEach(rules, (Rule) => {
+      _.forEach(rules, (rule) => {
         if (isNestedObject) {
           const splitField = field.split('.*.')
           const getArrayField = _.first(splitField)
@@ -43,35 +53,62 @@ export default class Validator {
 
           if (_.isArray(_.get(data, getArrayField))) {
             const truthy = _.map(_.get(data, getArrayField), f =>
-              Rule.execute(_.get(f, getObjectKey))
+              rule.func.execute(_.get(f, getObjectKey))
             )
             const passed = _.filter(truthy, t => !t).length === 0
 
             if (!passed) {
-              errors[field] = [...currentErrors, Rule]
+              errors[field] = [...currentErrors, rule.string]
             }
           }
         } else if (isNested) {
           const getOriginalField = field.replace('.*', '')
 
           if (_.isArray(_.get(data, getOriginalField))) {
-            const truthy = _.map(_.get(data, getOriginalField), i => Rule.execute(i))
+            const truthy = _.map(_.get(data, getOriginalField), i => rule.func.execute(i))
             const passed = _.filter(truthy, t => !t).length === 0
 
             if (!passed) {
-              errors[field] = [...currentErrors, Rule]
+              errors[field] = [...currentErrors, rule.string]
             }
           }
         } else {
-          const truthy = Rule.execute(_.get(data, field))
+          const truthy = rule.func.execute(_.get(data, field))
 
           if (!truthy) {
-            errors[field] = [...currentErrors, Rule]
+            errors[field] = [...currentErrors, rule.string]
           }
         }
       })
     })
 
-    return new Errors(errors, customFieldNames, customErrorMessages)
+    return new Validator(errors, customFieldNames, customErrorMessages)
+  }
+
+  /**
+   * Check if the current validation failed
+   *
+   * @return {bool}
+   */
+  failed() {
+    return this._errors && _.keys(this._errors) > 0
+  }
+
+  /**
+   * Return the errors for the current validation
+   *
+   * @return {Object}
+   */
+  errors() {
+    return this._errors
+  }
+
+  /**
+   * Returns the formatted errors using the formatter
+   *
+   * @return {Object}
+   */
+  format() {
+    return this._formatter.formatList()
   }
 }

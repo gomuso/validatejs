@@ -58,7 +58,7 @@ export default class Validator {
             const passed = _.filter(truthy, t => !t).length === 0
 
             if (!passed) {
-              errors[field] = [...currentErrors, rule.string]
+              errors[field] = [...currentErrors, rule.func]
             }
           }
         } else if (isNested) {
@@ -69,14 +69,14 @@ export default class Validator {
             const passed = _.filter(truthy, t => !t).length === 0
 
             if (!passed) {
-              errors[field] = [...currentErrors, rule.string]
+              errors[field] = [...currentErrors, rule.func]
             }
           }
         } else {
           const truthy = rule.func.execute(_.get(data, field))
 
           if (!truthy) {
-            errors[field] = [...currentErrors, rule.string]
+            errors[field] = [...currentErrors, rule.func]
           }
         }
       })

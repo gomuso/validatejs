@@ -1,8 +1,6 @@
-import AbstractRule from './AbstractRule'
-
-export default class Email extends AbstractRule {
-  constructor() {
-    super('email', 'valid')
+export default class Email {
+  errorString() {
+    return 'valid email address'
   }
 
   execute(value) {

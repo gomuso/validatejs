@@ -1,6 +1,8 @@
-import AbstractRule from './AbstractRule'
+export default class Required {
+  errorString() {
+    return 'is required'
+  }
 
-export default class Required extends AbstractRule {
   execute(value) {
     if (!value || value === '') {
       return false

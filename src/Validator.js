@@ -28,7 +28,7 @@ export default class Validator {
     const errors = {}
 
     _.forEach(validate, (ruleString, field) => {
-      const isRequired = _.has( ruleString, 'required' )
+      const isRequired = _.has(ruleString, 'required')
       const isNested = field.indexOf('*') > -1
       const isNestedObject = field.indexOf('.*.') > -1
 
@@ -91,7 +91,7 @@ export default class Validator {
    * @return {bool}
    */
   failed() {
-    return this._errors && !_.isEmpty( this._errors )
+    return this._errors && !_.isEmpty(this._errors)
   }
 
   /**

@@ -16,9 +16,7 @@ export default class RuleParser {
     }
 
     return _.chain(ruleObject)
-            .map((args, rule) => {
-              return this.getRule(rule, args)
-            })
+            .map((args, rule) => this.getRule(rule, args))
             .filter()
             .value()
   }

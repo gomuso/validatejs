@@ -22,15 +22,14 @@ export default class Formatter {
     _.forEach(this._errors, (errors, field) => {
       const fieldName = this._formatFieldName(field)
 
-      const errorStrings = _.map(errors, e => e.errorString() )
+      const errorStrings = _.map(errors, e => e.errorString())
 
-      console.log( fieldName, errorStrings )
+      console.log(fieldName, errorStrings)
     })
 
 
     // return _.map(this._errors, ( errors, field ) => {
     //   _.forEach( errors, e => {
-
 
 
     //     console.log( this._formatFieldName( field ), e.errorString() )

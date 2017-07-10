@@ -16,7 +16,7 @@ test('It should pass the validation', () => {
 
   const validation = Validator.check(data, {
     id: { required: true, type: 'int' },
-    name: { required: true, type: 'alphanum', min: 2, max: 10},
+    name: { required: true, type: 'alphanum', min: 2, max: 10 },
     email: { required: true, email: true },
     age: { required: true, type: 'int', min: 10, max: 50 },
     numbers: { type: 'array' },
@@ -49,7 +49,7 @@ test('Test the example on Readme', () => {
 
   const validation = Validator.check(data, {
     id: { required: true, type: 'int' },
-    firstName: { required: true, type: 'alphanum', min: 2, max: 10},
+    firstName: { required: true, type: 'alphanum', min: 2, max: 10 },
     email: { required: true, email: true },
     age: { type: 'int', min: 10, max: 50 },
     luckyNumbers: { type: 'array' },
@@ -151,7 +151,7 @@ test('Validate nested objects', () => {
   }
 
   const validation = Validator.check(data, {
-    name: { required: true , type: 'object' },
+    name: { required: true, type: 'object' },
     'name.given': { required: true, type: 'string', min: 2, max: 10 },
     'name.middle': { type: 'string' },
     'name.family': { required: true, type: 'string', min: 2, max: 3 }

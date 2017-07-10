@@ -2,6 +2,7 @@ import _ from 'lodash'
 
 import RuleParser from './RuleParser'
 import Formatter from './Formatter'
+import { Required } from './rules'
 
 export default class Validator {
   /**
@@ -27,8 +28,8 @@ export default class Validator {
   static check(data, validate, customFieldNames = null, customErrorMessages = null) {
     const errors = {}
 
-    _.forEach(validate, (ruleString, field) => {
-      const isRequired = _.has(ruleString, 'required')
+    _.forEach(validate, (ruleObject, field) => {
+      const isRequired = _.has(ruleObject, 'required')
       const isNested = field.indexOf('*') > -1
       const isNestedObject = field.indexOf('.*.') > -1
 
@@ -37,13 +38,13 @@ export default class Validator {
       }
 
       if (isRequired && !_.get(data, field) && !isNested && !isNestedObject) {
-        errors[field] = [ruleString]
+        errors[field] = [new Required()]
         return
       }
 
       const currentErrors = errors[field] || []
 
-      const rules = RuleParser.parseRuleObject(ruleString)
+      const rules = RuleParser.parseRuleObject(ruleObject)
 
       _.forEach(rules, (rule) => {
         if (isNestedObject) {

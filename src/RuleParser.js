@@ -4,27 +4,20 @@ import * as rules from './rules'
 
 export default class RuleParser {
   /**
-   * Takes in a rule string and parses it to the correct rule function
-   * For example: min:10 => rule min(10)
+   * Takes in a rule object and parses it to the correct rule function
+   * For example: { min: 10 } => rule min(10)
    *
-   * @param  {string} ruleString
+   * @param  {Object} ruleObject
    * @return {array}
    */
-  static parseString(ruleString) {
-    if (!ruleString) {
+  static parseRuleObject(ruleObject) {
+    if (!ruleObject) {
       return []
     }
 
-    return _.chain(ruleString)
-            .split(',')
-            .map((x) => {
-              const split = x.trim().split(':')
-              const args = split[1] ? split[1].trim() : null
-
-              return {
-                string: x.trim(),
-                func: this.getRule(split[0], args)
-              }
+    return _.chain(ruleObject)
+            .map((args, rule) => {
+              return this.getRule(rule, args)
             })
             .filter()
             .value()

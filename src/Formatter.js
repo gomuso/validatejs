@@ -13,10 +13,11 @@ export default class Formatter {
   }
 
   /**
-   * Formats errors
+   * Formats errors as list so the user can concat pieces themselves.
+   *
    * @return {Object}
    */
-  formatList() {
+  asList() {
     const returnErros = {}
 
     _.forEach(this._errors, (errors, field) => {
@@ -26,7 +27,12 @@ export default class Formatter {
     return returnErros
   }
 
-  formatSentence() {
+  /**
+   * Returns the validation errors as sentence
+   *
+   * @return {Object}
+   */
+  asSentence() {
     const returnErros = {}
 
     _.forEach(this._errors, (errors, field) => {

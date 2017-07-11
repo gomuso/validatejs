@@ -9,7 +9,7 @@ test('It should format error lists for one rule', () => {
     email: [new Rules.Required()]
   })
 
-  expect(formatter.formatList()).toEqual({
+  expect(formatter.asList()).toEqual({
     id: ['of type int'],
     firstName: ['alphanumerical'],
     email: ['is required']
@@ -21,7 +21,7 @@ test('It should format error lists for multiple rules', () => {
     id: [new Rules.Type('int'), new Rules.Length({ min: 1 })]
   })
 
-  expect(formatter.formatList()).toEqual({
+  expect(formatter.asList()).toEqual({
     id: ['of type int', 'minimum 1']
   })
 })
@@ -33,7 +33,7 @@ test('It should format an error sentence for one rule', () => {
     email: [new Rules.Required()]
   })
 
-  expect(formatter.formatSentence()).toEqual({
+  expect(formatter.asSentence()).toEqual({
     id: 'Id should be of type int',
     firstName: 'First name should be alphanumerical',
     email: 'Email is required'
@@ -46,7 +46,7 @@ test('It should format an error sentence for two rules', () => {
     firstName: [new Rules.Type('alphanum'), new Rules.Length({ max: 10 }, 'string')]
   })
 
-  expect(formatter.formatSentence()).toEqual({
+  expect(formatter.asSentence()).toEqual({
     id: 'Id should be of type int and minimum 1',
     firstName: 'First name should be alphanumerical and maximum 10 chars'
   })
@@ -62,7 +62,7 @@ test('It should format an error sentence for more than two rules', () => {
     ]
   })
 
-  expect(formatter.formatSentence()).toEqual({
+  expect(formatter.asSentence()).toEqual({
     id: 'Id should be of type int, minimum 1 and maximum 5',
     firstName: 'First name should be alphanumerical, minimum 2 chars and maximum 10 chars'
   })

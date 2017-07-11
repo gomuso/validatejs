@@ -46,24 +46,29 @@ const data = {
 }
 
 const validation = Validator.check(data, {
-  id: 'required, type:int',
-  firstName: 'required, type:alphanum, min:2, max:10',
-  email: 'required, email',
-  age: 'type:int, min:10, max:50',
-  luckyNumbers: 'type:array',
-  'luckyNumbers.*': 'type:int',
-  homeTown: 'required, type:object',
-  'homeTown.city': 'type:alphanum',
-  'homeTown.country': 'type:alphanum, min:2, max:2',
-  'homeTown.zipcode': 'type:int',
-  links: 'type:array',
-  'links.*.id': 'type:int',
-  'links.*.url': 'type:string'
+  id: { required: true, type: 'int' },
+  firstName: { required: true, type: 'alphanum', min: 2, max: 10 },
+  email: { required: true, email: true },
+  age: { type: 'int', min: 10, max: 50 },
+  luckyNumbers: { type: 'array' },
+  'luckyNumbers.*': { type: 'int' },
+  homeTown: { required: true, type: 'object' },
+  'homeTown.city': { type: 'alphanum' },
+  'homeTown.country': { type: 'alphanum', min: 2, max: 2 },
+  'homeTown.zipcode': { type: 'int' },
+  links: { type: 'array' },
+  'links.*.id': { type: 'int' },
+  'links.*.url': { type: 'string' }
 })
 
 if (validation.failed()) {
+  const errors = validation.errors()
+
+  // 2 formatters:
+  const asList = errors.asList()
+  const asSentence = errors.asSentence()
+
   // do something with your errors
-  console.log(validation.errors())
 }
 ```
 
@@ -91,21 +96,46 @@ if (validation.failed()) {
 | Type: Object   | `type:object`   | Matches everything that is an object
 | Type: Boolean  | `type:bool`     | Matches everything that is a boolean
 
-### How the default errors are generated
+### Make use of the error formatters
 
-The errors are generated based on the field name and the rules. Our internal convention for fieldnames
+We have two different ways of returning the validation errors for a given field:
+- as list
+- as sentence
+
+#### As List
+
+This one is useful if you want to construct your own error message using the different parts. For example
+you could receive this:
+
+```javascript
+const errors = validation.errors().asList()
+
+// output:
+errors = {
+  id: ['of type int', 'minimum 1']
+}
+```
+
+So you could go ahead and concat them in the way you want, for example display them as a list underneath the input.
+
+#### As Sentence
+
+If you have a lot of space and you'd rather show one big red box with the errors you could use the asSentence formatter.
+
+```javascript
+const errors = validation.errors().asSentence()
+
+// output:
+errors = {
+  id: 'Id should be of type int and minimum 1'
+}
+```
+
+The field names in the errors are generated based on the field name and the rules. Our internal convention for fieldnames
 is camelcase so we decided to split the fieldname by uppercase letters. For example:
 
 - firstName => First name
 - dateOfBirth => Date of birth
-
-In addition to that we're generating a string for every rule that failed and concat those. If for example
-the required and minimum length rule failed we'd generate the following error:
-```
-First name is required and should be at least 2 characters long
-```
-
-We decided to concat all rules because you can see all requirements straight away rather than having to validate again.
 
 
 ### Custom field names in error messages

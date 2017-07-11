@@ -65,7 +65,7 @@ test('Test the example on Readme', () => {
 
   expect(validation.failed()).toBe(true)
 
-  const errors = _.keys(validation.errors())
+  const errors = _.keys(validation.errors().asList())
   expect(errors).toHaveLength(6)
   expect(errors).toEqual([
     'firstName', 'luckyNumbers.*', 'homeTown.city', 'homeTown.zipcode', 'links.*.id', 'links.*.url'
@@ -82,7 +82,7 @@ test('Do not validate non-required fields if they are not present', () => {
     name: { type: 'alphanum' }
   })
 
-  const errors = _.keys(validation.errors())
+  const errors = _.keys(validation.errors().asList())
   expect(errors).toHaveLength(1)
   expect(errors[0]).toBe('id')
 })
@@ -98,7 +98,7 @@ test('Validate non-required fields if they are present', () => {
 
   expect(validation.failed()).toBe(true)
 
-  const errors = _.keys(validation.errors())
+  const errors = _.keys(validation.errors().asList())
   expect(errors).toHaveLength(1)
   expect(errors[0]).toBe('name')
 })
@@ -119,7 +119,7 @@ test('Validate required fields', () => {
 
   expect(validation.failed()).toBe(true)
 
-  const errors = _.keys(validation.errors())
+  const errors = _.keys(validation.errors().asList())
   expect(errors).toHaveLength(2)
   expect(errors).toEqual(['email', 'age'])
 })
@@ -136,7 +136,7 @@ test('Validate simple nested fields', () => {
 
   expect(validation.failed()).toBe(true)
 
-  const errors = _.keys(validation.errors())
+  const errors = _.keys(validation.errors().asList())
   expect(errors).toHaveLength(1)
   expect(errors).toEqual(['dates.*'])
 })
@@ -157,7 +157,7 @@ test('Validate nested objects', () => {
     'name.family': { required: true, type: 'string', min: 2, max: 3 }
   })
 
-  const errors = _.keys(validation.errors())
+  const errors = _.keys(validation.errors().asList())
   expect(errors).toHaveLength(2)
 
   expect(errors).toEqual(['name.middle', 'name.family'])
@@ -180,7 +180,7 @@ test('Validate objects nested within an array', () => {
 
   expect(validation.failed()).toBe(true)
 
-  const errors = _.keys(validation.errors())
+  const errors = _.keys(validation.errors().asList())
   expect(errors).toHaveLength(1)
   expect(errors).toEqual(['links.*.id'])
 })

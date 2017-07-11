@@ -101,15 +101,6 @@ export default class Validator {
    * @return {Object}
    */
   errors() {
-    return this._errors
-  }
-
-  /**
-   * Returns the formatted errors using the formatter
-   *
-   * @return {Object}
-   */
-  format() {
-    return this._formatter.formatList()
+    return this._formatter
   }
 }

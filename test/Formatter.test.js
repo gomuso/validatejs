@@ -67,3 +67,33 @@ test('It should format an error sentence for more than two rules', () => {
     firstName: 'First name should be alphanumerical, minimum 2 chars and maximum 10 chars'
   })
 })
+
+test('It should use custom field names for error sentences', () => {
+  const formatter = new Formatter({
+    id: [new Rules.Type('int')],
+    dob: [new Rules.Required()]
+  }, {
+    id: 'Identification',
+    dob: 'Date of birth'
+  })
+
+  expect(formatter.asSentence()).toEqual({
+    id: 'Identification should be of type int',
+    dob: 'Date of birth is required'
+  })
+})
+
+test('It should use custom error messages for error sentences', () => {
+  const formatter = new Formatter({
+    id: [new Rules.Type('int')],
+    dob: [new Rules.Required()]
+  }, null, {
+    id: 'Id is required and has to be valid',
+    dob: 'Date of birth is required and has to be MM/DD/YYYY'
+  })
+
+  expect(formatter.asSentence()).toEqual({
+    id: 'Id is required and has to be valid',
+    dob: 'Date of birth is required and has to be MM/DD/YYYY'
+  })
+})

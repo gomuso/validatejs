@@ -6,7 +6,7 @@ export default class Formatter {
    * @param  {Object} fieldNames
    * @param  {Object} errorMessages
    */
-  constructor(errors, fieldNames = null, errorMessages = null) {
+  constructor(errors, fieldNames = {}, errorMessages = {}) {
     this._errors = errors
     this._fieldNames = fieldNames
     this._errorMessages = errorMessages
@@ -53,6 +53,11 @@ export default class Formatter {
       }
 
       returnErros[field] = errorString
+
+      // or just overwrite if we have a custom message
+      if (_.get(this._errorMessages, field)) {
+        returnErros[field] = _.get(this._errorMessages, field)
+      }
     })
 
     return returnErros

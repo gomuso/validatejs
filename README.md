@@ -153,9 +153,9 @@ For that reason we have implemented an overwrite function where you can define d
 
 ```javascript
 const validation = Validator.check(data, {
-  id: 'required, type:int',
-  slug: 'required, type:alphanum, max:15',
-  dob: 'type:int, min:01011900, max:12122017',
+  id: { required: true, type: 'int' },
+  slug: { required: true, type: 'alphanum', max: 15 },
+  dob: { type: 'int', min: 01011900, max: 12122017 },
 }, {
   // define custom display values
   slug: 'Custom URL',
@@ -185,8 +185,8 @@ the option to overwrite the error messages returned for a field.
 
 ```javascript
 const validation = Validator.check(data, {
-  id: 'required, type:int',
-  firstName: 'required, type:alphanum, min:2, max:10'
+  id: { required: true, type:int },
+  firstName: { required: true, type: 'alphanum', min: 2, max: 10 }
 }, null, {
   firstName: 'First name is invalid!'
 })

@@ -6,6 +6,7 @@ This library has been written by our team to easily validate form data coming fr
 #### Main Features
 
 - Easy, distraction free syntax
+- Different error return formats
 - Custom error messaging
 - Validate nested arrays
 - Validate nested objects within arrays

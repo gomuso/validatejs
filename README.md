@@ -102,7 +102,7 @@ We have two different ways of returning the validation errors for a given field:
 - as list
 - as sentence
 
-#### As List
+#### As List
 
 This one is useful if you want to construct your own error message using the different parts. For example
 you could receive this:

@@ -1,52 +1,82 @@
 import _ from 'lodash'
 
 export default class Length {
-  constructor(options) {
-    this._options = options
-    this._errorMsg = ''
+  constructor({ min = null, max = null }, valueType = null) {
+    this._min = min
+    this._max = max
+
+    this._valueType = valueType
   }
 
-  name() {
-    return 'Length'
+  errorString() {
+    const min = this._min
+    const max = this._max
+
+    if (this._min) {
+      switch (this._valueType) {
+        case 'array':
+          return `at least ${min} items`
+        case 'number':
+          return `minimum ${min}`
+        case 'string':
+          return `minimum ${min} chars`
+        default:
+          return `minimum ${min}`
+      }
+    }
+
+    switch (this._valueType) {
+      case 'array':
+        return `maximum ${max} items`
+      case 'number':
+        return `maximum ${max}`
+      case 'string':
+        return `maximum ${max} chars`
+      default:
+        return `maximum ${max}`
+    }
   }
 
   execute(value) {
-    const { min, max } = this._options
+    const min = this._min
+    const max = this._max
 
-    // check for array length
-    if (_.isArray(value)) {
-      this._errorMsg = `length of ${this._options}`
-
-      if (min) {
+    // check for minimum values
+    if (min) {
+      if (_.isArray(value)) {
+        this._errorString = `at least ${min} items`
         return value.length >= min
       }
 
-      return value.length <= max
-    }
-
-
-    // check for number min and max
-    if (_.isNumber(value)) {
-      if (min) {
+      if (_.isNumber(value)) {
+        this._errorString = `minimum ${min}`
         return value >= min
       }
 
-      return value <= max
-    }
-
-    // check for string length
-    if (_.isString(value)) {
-      if (min) {
+      if (_.isString(value)) {
+        this._errorString = `at least ${min} chars`
         return value.length >= min
       }
+    }
 
-      return value.length <= max
+    // check for maximum values
+    if (max) {
+      if (_.isArray(value)) {
+        this._errorString = `maximum ${max} items`
+        return value.length <= max
+      }
+
+      if (_.isNumber(value)) {
+        this._errorString = `maximum ${max}`
+        return value <= max
+      }
+
+      if (_.isString(value)) {
+        this._errorString = `maximum ${max} chars`
+        return value.length <= max
+      }
     }
 
     return true
-  }
-
-  error() {
-    return this._errorMsg
   }
 }

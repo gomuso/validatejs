@@ -1,6 +1,6 @@
 export default class Required {
-  name() {
-    return 'Required'
+  errorString() {
+    return 'is required'
   }
 
   execute(value) {
@@ -9,9 +9,5 @@ export default class Required {
     }
 
     return true
-  }
-
-  error() {
-    return 'is required'
   }
 }

@@ -1,6 +1,6 @@
 export default class Email {
-  name() {
-    return 'NotBlank'
+  errorString() {
+    return 'valid email address'
   }
 
   execute(value) {
@@ -12,9 +12,5 @@ export default class Email {
     const regex = new RegExp( /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/ )
 
     return regex.test(value)
-  }
-
-  error() {
-    return 'valid'
   }
 }

@@ -15,15 +15,15 @@ test('It should pass the validation', () => {
   }
 
   const validation = Validator.check(data, {
-    id: 'required, type:int',
-    name: 'required, type:alphanum, min:2, max:10',
-    email: 'required, email',
-    age: 'required, type:int, min:10, max:50',
-    numbers: 'type:array',
-    'numbers.*': 'type:int',
-    links: 'type:array',
-    'links.*.id': 'type:int',
-    'links.*.url': 'type:string'
+    id: { required: true, type: 'int' },
+    name: { required: true, type: 'alphanum', min: 2, max: 10 },
+    email: { required: true, email: true },
+    age: { required: true, type: 'int', min: 10, max: 50 },
+    numbers: { type: 'array' },
+    'numbers.*': { type: 'int' },
+    links: { type: 'array' },
+    'links.*.id': { type: 'int' },
+    'links.*.url': { type: 'string' }
   })
 
   expect(validation.failed()).toBe(false)
@@ -48,24 +48,24 @@ test('Test the example on Readme', () => {
   }
 
   const validation = Validator.check(data, {
-    id: 'required, type:int',
-    firstName: 'required, type:alphanum, min:2, max:10',
-    email: 'required, email',
-    age: 'type:int, min:10, max:50',
-    luckyNumbers: 'type:array',
-    'luckyNumbers.*': 'type:int',
-    homeTown: 'required, type:object',
-    'homeTown.city': 'type:alphanum',
-    'homeTown.country': 'type:alphanum, min:2, max:2',
-    'homeTown.zipcode': 'type:int',
-    links: 'type:array',
-    'links.*.id': 'type:int',
-    'links.*.url': 'type:string'
+    id: { required: true, type: 'int' },
+    firstName: { required: true, type: 'alphanum', min: 2, max: 10 },
+    email: { required: true, email: true },
+    age: { type: 'int', min: 10, max: 50 },
+    luckyNumbers: { type: 'array' },
+    'luckyNumbers.*': { type: 'int' },
+    homeTown: { required: true, type: 'object' },
+    'homeTown.city': { type: 'alphanum' },
+    'homeTown.country': { type: 'alphanum', min: 2, max: 2 },
+    'homeTown.zipcode': { type: 'int' },
+    links: { type: 'array' },
+    'links.*.id': { type: 'int' },
+    'links.*.url': { type: 'string' }
   })
 
   expect(validation.failed()).toBe(true)
 
-  const errors = _.keys(validation.errors())
+  const errors = _.keys(validation.errors().asList())
   expect(errors).toHaveLength(6)
   expect(errors).toEqual([
     'firstName', 'luckyNumbers.*', 'homeTown.city', 'homeTown.zipcode', 'links.*.id', 'links.*.url'
@@ -78,13 +78,11 @@ test('Do not validate non-required fields if they are not present', () => {
   }
 
   const validation = Validator.check(data, {
-    id: 'required, type:int',
-    name: 'type:alphanum'
+    id: { required: true, type: 'int' },
+    name: { type: 'alphanum' }
   })
 
-  expect(validation.failed()).toBe(true)
-
-  const errors = _.keys(validation.errors())
+  const errors = _.keys(validation.errors().asList())
   expect(errors).toHaveLength(1)
   expect(errors[0]).toBe('id')
 })
@@ -95,12 +93,12 @@ test('Validate non-required fields if they are present', () => {
   }
 
   const validation = Validator.check(data, {
-    name: 'type:alphanum'
+    name: { type: 'alphanum' }
   })
 
   expect(validation.failed()).toBe(true)
 
-  const errors = _.keys(validation.errors())
+  const errors = _.keys(validation.errors().asList())
   expect(errors).toHaveLength(1)
   expect(errors[0]).toBe('name')
 })
@@ -113,15 +111,15 @@ test('Validate required fields', () => {
   }
 
   const validation = Validator.check(data, {
-    id: 'required, type:int',
-    name: 'required, type:alphanum, min:2, max:10',
-    email: 'required, email',
-    age: 'required, type:int, min:10, max:50'
+    id: { required: true, type: 'int' },
+    name: { required: true, type: 'alphanum', min: 2, max: 10 },
+    email: { required: true, email: true },
+    age: { required: true, type: 'int', min: 10, max: 50 }
   })
 
   expect(validation.failed()).toBe(true)
 
-  const errors = _.keys(validation.errors())
+  const errors = _.keys(validation.errors().asList())
   expect(errors).toHaveLength(2)
   expect(errors).toEqual(['email', 'age'])
 })
@@ -132,13 +130,13 @@ test('Validate simple nested fields', () => {
   }
 
   const validation = Validator.check(data, {
-    dates: 'required, type:array, min:1',
-    'dates.*': 'type:int'
+    dates: { required: true, type: 'array', min: 1 },
+    'dates.*': { type: 'int' }
   })
 
   expect(validation.failed()).toBe(true)
 
-  const errors = _.keys(validation.errors())
+  const errors = _.keys(validation.errors().asList())
   expect(errors).toHaveLength(1)
   expect(errors).toEqual(['dates.*'])
 })
@@ -153,13 +151,13 @@ test('Validate nested objects', () => {
   }
 
   const validation = Validator.check(data, {
-    name: 'required, type:object',
-    'name.given': 'required, type:string, min:2, max:10',
-    'name.middle': 'type:string',
-    'name.family': 'required, type:string, min:2, max:3'
+    name: { required: true, type: 'object' },
+    'name.given': { required: true, type: 'string', min: 2, max: 10 },
+    'name.middle': { type: 'string' },
+    'name.family': { required: true, type: 'string', min: 2, max: 3 }
   })
 
-  const errors = _.keys(validation.errors())
+  const errors = _.keys(validation.errors().asList())
   expect(errors).toHaveLength(2)
 
   expect(errors).toEqual(['name.middle', 'name.family'])
@@ -174,15 +172,15 @@ test('Validate objects nested within an array', () => {
   }
 
   const validation = Validator.check(data, {
-    links: 'type:array',
-    'links.*': 'type:object',
-    'links.*.id': 'type:int',
-    'links.*.url': 'type:string'
+    links: { type: 'array' },
+    'links.*': { type: 'object' },
+    'links.*.id': { type: 'int' },
+    'links.*.url': { type: 'string' }
   })
 
   expect(validation.failed()).toBe(true)
 
-  const errors = _.keys(validation.errors())
+  const errors = _.keys(validation.errors().asList())
   expect(errors).toHaveLength(1)
   expect(errors).toEqual(['links.*.id'])
 })

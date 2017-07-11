@@ -1,13 +1,40 @@
 import _ from 'lodash'
 
 export default class Length {
-  constructor({ min = null, max = null }) {
+  constructor({ min = null, max = null }, valueType = null) {
     this._min = min
     this._max = max
+
+    this._valueType = valueType
   }
 
   errorString() {
-    return this._errorString
+    const min = this._min
+    const max = this._max
+
+    if (this._min) {
+      switch (this._valueType) {
+        case 'array':
+          return `at least ${min} items`
+        case 'number':
+          return `minimum ${min}`
+        case 'string':
+          return `minimum ${min} chars`
+        default:
+          return `minimum ${min}`
+      }
+    }
+
+    switch (this._valueType) {
+      case 'array':
+        return `maximum ${max} items`
+      case 'number':
+        return `maximum ${max}`
+      case 'string':
+        return `maximum ${max} chars`
+      default:
+        return `maximum ${max}`
+    }
   }
 
   execute(value) {

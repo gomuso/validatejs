@@ -20,24 +20,37 @@ export default class Formatter {
     const returnErros = {}
 
     _.forEach(this._errors, (errors, field) => {
-      const fieldName = this._formatFieldName(field)
-
-      const errorStrings = _.map(errors, e => e.errorString())
-
-      console.log(fieldName, errorStrings)
+      returnErros[field] = _.map(errors, e => e.errorString())
     })
 
-
-    // return _.map(this._errors, ( errors, field ) => {
-    //   _.forEach( errors, e => {
-
-
-    //     console.log( this._formatFieldName( field ), e.errorString() )
-    //   } )
-    //   // return e.errorString
-    // })
+    return returnErros
   }
 
+  formatSentence() {
+    const returnErros = {}
+
+    _.forEach(this._errors, (errors, field) => {
+      const fieldName = this._formatFieldName(field)
+
+      const rules = _.map(errors, e => e.constructor.name)
+      const isRequired = rules.indexOf('Required') > -1
+
+      const totalRules = errors.length
+
+      const errorsAsStrings = _.map(errors, e => e.errorString())
+                               .join(totalRules === 2 ? ' and ' : ', ')
+      const firstJoin = isRequired ? '' : ' should be'
+      let errorString = `${fieldName}${firstJoin} ${errorsAsStrings}`
+
+      if (totalRules > 2) {
+        errorString = this._replaceLast(errorString, ',', ' and')
+      }
+
+      returnErros[field] = errorString
+    })
+
+    return returnErros
+  }
 
   /**
    * Formats a field name into a human readable format
@@ -70,7 +83,13 @@ export default class Formatter {
     }
 
     // standard
-    const upperFirst = _.upperFirst(field)
-    return upperFirst.split(/(?=[A-Z])/).join(' ')
+    const name = field.split(/(?=[A-Z])/).join(' ').toLowerCase()
+    return _.upperFirst(name)
+  }
+
+  _replaceLast(x, y, z) {
+    const a = x.split('')
+    a[x.lastIndexOf(y)] = z
+    return a.join('')
   }
 }

@@ -140,6 +140,8 @@ is camelcase so we decided to split the fieldname by uppercase letters. For exam
 
 ### Custom field names in error messages
 
+*Please note: Custom field names only work when using the `asSentence` formatter!*
+
 It might happen that you have a name for a field within the code that you don't want to expose
 to the user - either because you don't want them to know or because they wouldn't understand.
 
@@ -170,6 +172,8 @@ Now if you the validation fails you would receive this output:
 ```
 
 ### Custom error messages for fields
+
+*Please note: Custom error messages only work when using the `asSentence` formatter!*
 
 You might not like the error string that is being returned from this library. It may look something like this:
 ```

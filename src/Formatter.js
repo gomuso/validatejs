@@ -46,27 +46,31 @@ export default class Formatter {
       const errorsAsStrings = _.chain(errors)
         .map((e, i) => {
           const er = e.errorString()
-          if (isRequired) {
-            if (i === 0) {
-              return [er, ' and should be ']
-            } else if (i === 1 && i < totalRules - 1) {
-              return [er, ' and ']
+          if (totalRules > 1) {
+            if (isRequired) {
+              if (i === 0) {
+                return [er, ' and should be ']
+              } else if (i === 1 && i < totalRules - 1) {
+                return [er, ' and ']
+              }
+
+              return i < totalRules - 1 ? [er, ', '] : [er]
             }
 
-            return i < totalRules - 1 ? [er, ', '] : [er]
-          }
+            if (i === 0) {
+              return ['should be ', er]
+            }
 
-          if (i === 0) {
-            return ['should be ', er]
-          }
-
-          if (totalRules > 2) {
-            if (i > 0 && i < totalRules - 1) {
-              return [', ', er]
+            if (totalRules > 2) {
+              if (i > 0 && i < totalRules - 1) {
+                return [', ', er]
+              }
+              return [' and ', er]
             }
             return [' and ', er]
           }
-          return [' and ', er]
+
+          return isRequired ? [er] : ['should be ', er]
         })
         .flatten()
         .join('')

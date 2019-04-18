@@ -55,7 +55,7 @@ test('It should format an error sentence for two rules', () => {
   })
 })
 
-test.only('It should format an error sentence for more than two rules', () => {
+test('It should format an error sentence for more than two rules', () => {
   const formatter = new Formatter({
     id: [
       new Rules.Type('int'),

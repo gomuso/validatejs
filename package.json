@@ -1,6 +1,6 @@
 {
   "name": "muso-validatejs",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "A javascript library to simply validate (form) data",
   "main": "lib/validate.min.js",
   "module": "lib/validate.min.js",

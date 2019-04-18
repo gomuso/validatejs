@@ -9,9 +9,7 @@ test('It should pass the validation', () => {
     email: 'john@gmail.com',
     age: 23,
     numbers: [1, 2, 3, 4],
-    links: [
-      { id: 1, url: 'www.google.com' }
-    ]
+    links: [{ id: 1, url: 'www.google.com' }]
   }
 
   const validation = Validator.check(data, {
@@ -41,10 +39,7 @@ test('Test the example on Readme', () => {
       country: 'UK',
       zipcode: '12345'
     },
-    links: [
-      { id: '1', url: 1920303003 },
-      { id: 2, url: 'www.facebook.com' }
-    ]
+    links: [{ id: '1', url: 1920303003 }, { id: 2, url: 'www.facebook.com' }]
   }
 
   const validation = Validator.check(data, {
@@ -68,7 +63,12 @@ test('Test the example on Readme', () => {
   const errors = _.keys(validation.errors().asList())
   expect(errors).toHaveLength(6)
   expect(errors).toEqual([
-    'firstName', 'luckyNumbers.*', 'homeTown.city', 'homeTown.zipcode', 'links.*.id', 'links.*.url'
+    'firstName',
+    'luckyNumbers.*',
+    'homeTown.city',
+    'homeTown.zipcode',
+    'links.*.id',
+    'links.*.url'
   ])
 })
 
@@ -183,4 +183,17 @@ test('Validate objects nested within an array', () => {
   const errors = _.keys(validation.errors().asList())
   expect(errors).toHaveLength(1)
   expect(errors).toEqual(['links.*.id'])
+})
+
+test.only('it validates and returns errors', () => {
+  const data = {}
+
+  const validation = Validator.check(data, {
+    firstName: { required: true, type: 'alphanum', min: 2 }
+  })
+
+  expect(validation.failed()).toBeTruthy()
+
+  const errors = validation.errors().asSentence()
+  expect(errors.firstName).toEqual('First name is required')
 })

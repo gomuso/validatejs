@@ -43,14 +43,36 @@ export default class Formatter {
 
       const totalRules = errors.length
 
-      const errorsAsStrings = _.map(errors, e => e.errorString())
-                               .join(totalRules === 2 ? ' and ' : ', ')
-      const firstJoin = isRequired ? '' : ' should be'
-      let errorString = `${fieldName}${firstJoin} ${errorsAsStrings}`
+      const errorsAsStrings = _.chain(errors)
+        .map((e, i) => {
+          const er = e.errorString()
+          if (isRequired) {
+            if (i === 0) {
+              return [er, ' and should be ']
+            } else if (i === 1 && i < totalRules - 1) {
+              return [er, ' and ']
+            }
 
-      if (totalRules > 2) {
-        errorString = this._replaceLast(errorString, ',', ' and')
-      }
+            return i < totalRules - 1 ? [er, ', '] : [er]
+          }
+
+          if (i === 0) {
+            return ['should be ', er]
+          }
+
+          if (totalRules > 2) {
+            if (i > 0 && i < totalRules - 1) {
+              return [', ', er]
+            }
+            return [' and ', er]
+          }
+          return [' and ', er]
+        })
+        .flatten()
+        .join('')
+        .value()
+
+      const errorString = `${fieldName} ${errorsAsStrings}`
 
       returnErros[field] = errorString
 
@@ -94,7 +116,10 @@ export default class Formatter {
     }
 
     // standard
-    const name = field.split(/(?=[A-Z])/).join(' ').toLowerCase()
+    const name = field
+      .split(/(?=[A-Z])/)
+      .join(' ')
+      .toLowerCase()
     return _.upperFirst(name)
   }
 
